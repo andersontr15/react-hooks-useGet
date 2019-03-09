@@ -1,28 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useMemo } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import useGet from './useGet';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const App = React.memo(props => {
+  const data = useGet('https://api.github.com/users/andersontr15');
+  console.log(data, 'DATA');
+  return Object.values(data).length ? (
+    <div>
+      Data here:
+      <code>{JSON.stringify(data)}</code>
+    </div>
+  ) : (
+    'LOADING'
+  );
+});
 
 export default App;
